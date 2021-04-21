@@ -2,7 +2,6 @@ from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.action_chains import ActionChains
 from bs4 import BeautifulSoup
-import pandas as pd
 import time
 from tkinter import *
 import os, sys
@@ -87,10 +86,6 @@ for element in HTML_data:
     
 total_rows = len(absent_list)
 
-dataFrame = pd.DataFrame(data = absent_list, columns = list_header)
-
-dataFrame.to_csv('absent.csv')
-
 absent_list.insert(0, list_header)
 
 to_print_table = []
@@ -99,6 +94,8 @@ for i in range (total_rows+1):
         to_print_table.append(absent_list[i][6:16])
 
 total_columns = len(to_print_table[0])
+
+chrome.quit()
 
 root = Tk()
 root.title('我愛風紀股長')
