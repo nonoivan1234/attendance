@@ -12,12 +12,13 @@ class Table:
             for j in range(total_columns):
                 if j==0:
                     self.e = Entry(root, width=10, fg='blue',
-                                font=('Arial',16,'bold'), justify='center')
+                                font=('微軟正黑體',16,'bold'), justify='center')
                 else:
                     self.e = Entry(root, width=5, fg='blue',
-                                font=('Arial',16,'bold'), justify='center')                    
-                self.e.grid(row=i, column=j)
+                                font=('微軟正黑體',16,'bold'), justify='center')                    
                 self.e.insert(END, to_print_table[i][j])
+                self.e.configure(state='readonly')
+                self.e.grid(row=i, column=j)
                 
 url = "https://ldap.tp.edu.tw/oauth/authorize?client_id=13&redirect_uri=https%3A%2F%2Fsschool.tp.edu.tw%2Fedusso%2Fauth&response_type=code&state=ds%3D323301&scope=user%20profile%20idno%20school%20group_info"
 
@@ -98,6 +99,6 @@ total_columns = len(to_print_table[0])
 chrome.quit()
 
 root = Tk()
-root.title('我愛風紀股長')
+root.title('我愛風紀股長！')
 t = Table(root)
 root.mainloop()
