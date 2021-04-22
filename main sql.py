@@ -1,26 +1,27 @@
+import tkinter
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.action_chains import ActionChains
 from bs4 import BeautifulSoup
-import pandas as pd
 import time
 from tkinter import *
 from db import Database
-
+from tkinter.ttk import Treeview
 root = Tk()
 db = Database('absent.db')
                 
 url = "https://ldap.tp.edu.tw/oauth/authorize?client_id=13&redirect_uri=https%3A%2F%2Fsschool.tp.edu.tw%2Fedusso%2Fauth&response_type=code&state=ds%3D323301&scope=user%20profile%20idno%20school%20group_info"
 
-
+    
 def click_collapse(target):
     ActionChains(chrome).move_to_element(target).perform()
     ActionChains(chrome).click(target).perform()
     
 def populate_list():
-    parts_list.delete(0,END)
+    for i in router_tree_view.get_children():
+        router_tree_view.delete(i)
     for row in db.fetch():
-        parts_list.insert(END, row)
+        router_tree_view.insert('', 'end', values=row)
 
 options = Options()
 options.add_argument("--disable-notifications")
@@ -58,27 +59,83 @@ for items in header:
     except:
         continue
 
-db.insert(list_header[6], list_header[8], list_header[9], list_header[10], list_header[11], list_header[12], list_header[13], list_header[14], list_header[15], list_header[16], list_header[17])
+header = [list_header[6], list_header[8], list_header[9], list_header[10], list_header[11], list_header[12], list_header[13], list_header[14], list_header[15], list_header[16], list_header[17]]
 
 HTML_data = soup.find_all("table", {'role' : 'presentation'})[1].find_all("tr", {'role' : 'row'})
   
 for element in HTML_data:
     sub_data = []
-    if element:
-        for sub_element in element:
-            try:
-                sub_data.append(sub_element.get_text())
-            except:
-                continue
-        if not sub_data[6]:
-            db.insert(sub_data[6], sub_data[8], sub_data[9], sub_data[10], sub_data[11], sub_data[12], sub_data[13], sub_data[14], sub_data[15], sub_data[16], sub_data[17])
-    
-# Price List (List Box)
-parts_list = Listbox(root, height=50, width=50, border=0)
-parts_list.grid(pady=20, padx=20)
+    for sub_element in element:
+        try:
+            sub_data.append(sub_element.get_text())
+        except:
+            continue
+    if sub_data[6] != '':
+        db.insert(sub_data[6], sub_data[8], sub_data[9], sub_data[10], sub_data[11], sub_data[12], sub_data[13], sub_data[14], sub_data[15], sub_data[16], sub_data[17])
+
+chrome.close()
+
+frame_router = Frame(root)
+frame_router.grid(row=0, column=0, columnspan=5, rowspan=6, pady=10, padx=20)
+
+columns = ['id', 'date_', 'zero', 'zeroo', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight']
+router_tree_view = Treeview(frame_router, columns=columns, show='headings')
+router_tree_view.column("id", width=40, anchor='center')
+router_tree_view.heading("id", text="編號")
+router_tree_view.column('date_', width=100, anchor='center')
+router_tree_view.heading('date_', text='日期')
+for col in range (2,len(columns)):
+    router_tree_view.column(columns[col], width=40, anchor='center')
+    router_tree_view.heading(columns[col], text=header[col-1])
+router_tree_view.pack(side="left", fill="x")
+scrollbar = Scrollbar(frame_router, orient='vertical')
+scrollbar.configure(command=router_tree_view.yview)
+scrollbar.pack(side="right", fill="y")
+router_tree_view.config(yscrollcommand=scrollbar.set)
+
+ct = []
+for i in columns[2:]:
+    ct.append(db.count_item(i))
+db.insert('總和', sum(ct[0]), sum(ct[1]), sum(ct[2]), sum(ct[3]), sum(ct[4]), sum(ct[5]), sum(ct[6]), sum(ct[7]), sum(ct[8]), sum(ct[9]))
+
+count_shi = 0
+count_chi = 0
+count_kuan = 0
+count_sick = 0
+count_gon = 0
+for i in range (len(ct)):
+    for j in range (5):
+        if j==0:
+            count_chi+=ct[i][j]
+        if j==1:
+            count_gon+=ct[i][j]
+        if j==2:
+            count_kuan+=ct[i][j]
+        if j==3:
+            count_sick+=ct[i][j]
+        if j==4:
+            count_shi+=ct[i][j]
+            
+shi = tkinter.Label(root, text="事假："+str(count_shi)+"節",font = ("微軟正黑體",15))
+shi.grid(column=0, row=7, columnspan=1)
+
+chi = tkinter.Label(root, text="遲到："+str(count_chi)+"節",font = ("微軟正黑體",15))
+chi.grid(column=1, row=7, columnspan=1)
+
+kuan = tkinter.Label(root, text="曠課："+str(count_kuan)+"節",font = ("微軟正黑體",15))
+kuan.grid(column=2, row=7, columnspan=1)
+
+sick = tkinter.Label(root, text="病假："+str(count_sick)+"節",font = ("微軟正黑體",15))
+sick.grid(column=3, row=7, columnspan=1)
+
+gon = tkinter.Label(root, text="公假："+str(count_gon)+"節",font = ("微軟正黑體",15))
+gon.grid(column=4, row=7, columnspan=1)
+
+sentence = tkinter.Label(root, text="總共 %d 節   "%sum(list(map(sum,ct)))+"所以我是要早點到嗎 ^___^",font = ("微軟正黑體",15))
+sentence.grid(column=0, row=8, columnspan=5)
 
 populate_list()
 
-root.geometry('350x700')
+root.title('我愛風紀股長！')
 
 root.mainloop()

@@ -1,3 +1,2 @@
-import time
-print(123)
-time.sleep(10)
+r = [1,2, [1,2]]
+print(list(map(sum, r)))
