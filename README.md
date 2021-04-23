@@ -1,4 +1,4 @@
-README Attendent
+Attendent.exe by YuCheng Chang
 ===
 
 ## Introduction
