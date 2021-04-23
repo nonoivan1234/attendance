@@ -11,26 +11,29 @@ from tkinter.ttk import Treeview
 
 root = Tk()
 db = Database('absent.db')
-                
+
 url = "https://ldap.tp.edu.tw/oauth/authorize?client_id=13&redirect_uri=https%3A%2F%2Fsschool.tp.edu.tw%2Fedusso%2Fauth&response_type=code&state=ds%3D323301&scope=user%20profile%20idno%20school%20group_info"
 
-    
+# click the collapse
 def click_collapse(target):
     ActionChains(chrome).move_to_element(target).perform()
     ActionChains(chrome).click(target).perform()
-    
+
+# populate the sqlite database to the router_tree_view    
 def populate_list():
     for i in router_tree_view.get_children():
         router_tree_view.delete(i)
     for row in db.fetch():
         router_tree_view.insert('', 'end', values=row)
 
+# option of the driver
 options = Options()
 options.add_argument("--disable-notifications")
 options.add_experimental_option("excludeSwitches", ["enable-logging"])
 chrome = webdriver.Chrome(executable_path='./chromedriver', chrome_options=options)
 chrome.get(url)
 
+# input the username and password then click the submit the button
 username = chrome.find_element_by_id('username')
 password = chrome.find_element_by_id('password')
 submit_btn = chrome.find_element_by_id('btnLogin')
@@ -39,19 +42,24 @@ password.send_keys('A131892440')
 submit_btn.click()
 time.sleep(1)
 
+# close the notifying page after submit the passwd
 close_btn = chrome.find_element_by_xpath('//*[@id="carouselModalCenter"]/div/div/div[1]/button')
 close_btn.click()
 
+
+# click the left side collapse to go into the purpose page
 btn = chrome.find_element_by_xpath('//*[@id="LeftMenu"]/div/ul/li[2]/a')
 click_collapse(btn)
 
 absent_btn = chrome.find_element_by_xpath('//*[@id="collapse200"]/div/li[3]/a')
 click_collapse(absent_btn)
 
+# wait for the page
 time.sleep(2)
 
 soup = BeautifulSoup(chrome.page_source, 'html.parser')
 
+# find header in html
 list_header = []
 header = soup.find("tr", {'class' : 'ui-jqgrid-labels'}).find_all("th")
 
@@ -61,10 +69,11 @@ for items in header:
     except:
         continue
 
-header = [list_header[6], list_header[8], list_header[9], list_header[10], list_header[11], list_header[12], list_header[13], list_header[14], list_header[15], list_header[16], list_header[17]]
+header = [list_header[6], list_header[7], list_header[8], list_header[9], list_header[10], list_header[11], list_header[12], list_header[13], list_header[14], list_header[15], list_header[16]]
 
+# find the neaded data
 HTML_data = soup.find_all("table", {'role' : 'presentation'})[1].find_all("tr", {'role' : 'row'})
-  
+
 for element in HTML_data:
     sub_data = []
     for sub_element in element:
@@ -72,14 +81,16 @@ for element in HTML_data:
             sub_data.append(sub_element.get_text())
         except:
             continue
-    if sub_data[6] != '':
-        db.insert(sub_data[6], sub_data[8], sub_data[9], sub_data[10], sub_data[11], sub_data[12], sub_data[13], sub_data[14], sub_data[15], sub_data[16], sub_data[17])
+    if sub_data[6] != '':   # insert the non-null header to database
+        db.insert(sub_data[6], sub_data[7], sub_data[8], sub_data[9], sub_data[10], sub_data[11], sub_data[12], sub_data[13], sub_data[14], sub_data[15], sub_data[16])
 
 chrome.close()
 
+ # setting the database_viewer
 frame_router = Frame(root)
 frame_router.grid(row=0, column=0, columnspan=5, rowspan=1, pady=10, padx=20)
 
+# send the data from database to the viewer and designing
 columns = ['id', 'date_', 'zero', 'zeroo', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight']
 router_tree_view = Treeview(frame_router, columns=columns, show='headings')
 router_tree_view.column("id", width=40, anchor='center')
@@ -100,6 +111,7 @@ for i in columns[2:]:
     ct.append(db.count_item(i))
 db.insert('總和', sum(ct[0]), sum(ct[1]), sum(ct[2]), sum(ct[3]), sum(ct[4]), sum(ct[5]), sum(ct[6]), sum(ct[7]), sum(ct[8]), sum(ct[9]))
 
+# count every item's number in database 
 count_shi = 0
 count_chi = 0
 count_kuan = 0
@@ -118,7 +130,8 @@ for i in range (len(ct)):
             count_sick+=ct[i][j]
         if j==4:
             count_shi+=ct[i][j]
-            
+
+# setting the label under the database_viewer          
 shi = tkinter.Label(root, text="事假："+str(count_shi)+"節",font = ("微軟正黑體",13))
 shi.grid(column=0, row=2, columnspan=1)
 
@@ -141,4 +154,5 @@ populate_list()
 
 root.title('我愛風紀股長！')
 
+# run the main GUI
 root.mainloop()
