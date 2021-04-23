@@ -7,6 +7,8 @@ import time
 from tkinter import *
 from db import Database
 from tkinter.ttk import Treeview
+
+
 root = Tk()
 db = Database('absent.db')
                 
@@ -76,7 +78,7 @@ for element in HTML_data:
 chrome.close()
 
 frame_router = Frame(root)
-frame_router.grid(row=0, column=0, columnspan=5, rowspan=6, pady=10, padx=20)
+frame_router.grid(row=0, column=0, columnspan=5, rowspan=8, pady=10, padx=20)
 
 columns = ['id', 'date_', 'zero', 'zeroo', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight']
 router_tree_view = Treeview(frame_router, columns=columns, show='headings')
@@ -103,6 +105,7 @@ count_chi = 0
 count_kuan = 0
 count_sick = 0
 count_gon = 0
+
 for i in range (len(ct)):
     for j in range (5):
         if j==0:
@@ -117,22 +120,22 @@ for i in range (len(ct)):
             count_shi+=ct[i][j]
             
 shi = tkinter.Label(root, text="事假："+str(count_shi)+"節",font = ("微軟正黑體",15))
-shi.grid(column=0, row=7, columnspan=1)
+shi.grid(column=0, row=8, columnspan=1)
 
 chi = tkinter.Label(root, text="遲到："+str(count_chi)+"節",font = ("微軟正黑體",15))
-chi.grid(column=1, row=7, columnspan=1)
+chi.grid(column=1, row=8, columnspan=1)
 
 kuan = tkinter.Label(root, text="曠課："+str(count_kuan)+"節",font = ("微軟正黑體",15))
-kuan.grid(column=2, row=7, columnspan=1)
+kuan.grid(column=2, row=8, columnspan=1)
 
 sick = tkinter.Label(root, text="病假："+str(count_sick)+"節",font = ("微軟正黑體",15))
-sick.grid(column=3, row=7, columnspan=1)
+sick.grid(column=3, row=8, columnspan=1)
 
 gon = tkinter.Label(root, text="公假："+str(count_gon)+"節",font = ("微軟正黑體",15))
-gon.grid(column=4, row=7, columnspan=1)
+gon.grid(column=4, row=8, columnspan=1)
 
 sentence = tkinter.Label(root, text="總共 %d 節   "%sum(list(map(sum,ct)))+"所以我是要早點到嗎 ^___^",font = ("微軟正黑體",15))
-sentence.grid(column=0, row=8, columnspan=5)
+sentence.grid(column=0, row=9, columnspan=5, pady=10, padx=20)
 
 populate_list()
 
