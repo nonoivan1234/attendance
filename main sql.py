@@ -1,12 +1,12 @@
 import tkinter
+from tkinter import *
+from tkinter.ttk import Treeview
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.action_chains import ActionChains
 from bs4 import BeautifulSoup
 import time
-from tkinter import *
 from db import Database
-from tkinter.ttk import Treeview
 
 
 root = Tk()
