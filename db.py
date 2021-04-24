@@ -7,7 +7,7 @@ class Database:
         self.conn = sqlite3.connect(db)
         self.cur = self.conn.cursor()
         self.cur.execute(
-            "CREATE TABLE IF NOT EXISTS tb (id INTEGER PRIMARY KEY, date_ text, zero text, zeroo text, one text, two text, three text, four text, five text, six text, seven text, eight text)")
+            "CREATE TABLE IF NOT EXISTS tb (id INTEGER PRIMARY KEY, date_ text, zero text, morning text, one text, two text, three text, four text, five text, six text, seven text, eight text)")
         self.cur.execute('DELETE FROM tb;',)
         self.conn.commit()
         
@@ -18,11 +18,11 @@ class Database:
         rows = self.cur.fetchall()
         return rows
         
-    def insert(self, date_, zero, zeroo, one, two, three, four, five, six, seven, eight):
+    def insert(self, date_, zero, morning, one, two, three, four, five, six, seven, eight):
         # insert the data to the database
         
         self.cur.execute("INSERT INTO tb VALUES (NULL, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
-                        (date_, zero, zeroo, one, two, three, four, five, six, seven, eight))
+                        (date_, zero, morning, one, two, three, four, five, six, seven, eight))
         self.conn.commit()
         
     def count_item(self, column):

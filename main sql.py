@@ -91,7 +91,7 @@ frame_router = Frame(root)
 frame_router.grid(row=0, column=0, columnspan=5, rowspan=1, pady=10, padx=20)
 
 # send the data from database to the viewer and designing
-columns = ['id', 'date_', 'zero', 'zeroo', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight']
+columns = ['id', 'date_', 'zero', 'morning', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight']
 router_tree_view = Treeview(frame_router, columns=columns, show='headings')
 router_tree_view.column("id", width=40, anchor='center')
 router_tree_view.heading("id", text="編號")
