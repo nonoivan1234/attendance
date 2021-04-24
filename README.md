@@ -3,12 +3,12 @@ Attendence
 # Introduction
 - ## Background
     The application is based on ```Python 3.9.4``` . Main purpose is to scrape the absent data down from [臺北市高中校務行政系統](https://sschool.tp.edu.tw/Login.action).
-- ## Motivation
-    In our school, who was absent before nead to check out the attendence in three days after you took a day off. However, I am usually forget to do that on time, although my mom always asks me to do that. So I decided to write a programe to check my attendence automatically, or she will blame on me every times I took a day off.
-- ## Method
+- ### Method
     First, we are asked to login the site. Second, we have to go to the asking page to find my absent data then scrape it down. Third, store the data which is just scraped. Last, create a GUI frame to show the database with a ScrollBar beside, count the amount of absent classses in each sections a day, and count the different type of absent.
+- ### Motivation
+    In our school, who was absent before nead to check out the attendence in three days after you took a day off. However, I am usually forget to do that on time, although my mom always asks me to do that. So I decided to write a programe to check my attendence automatically, or she will blame on me every times I took a day off.
 # Body
-- ## Requirements
+- ## Tools (imported in Python)
     - ### Tkinter
         To build a GUI application with Python quickly.
     - ### Selenium
@@ -23,11 +23,6 @@ Attendence
         ``` 
     - ### SQLite3
         To create a ```.db``` file to store the data. We will create a class named ```Database``` and define some functions to complete the purpose.
-    - ### Install them by pip
-        Open your terminal and enter the code below.
-        ```=
-        pip install -r requirements.txt
-        ```
 - ## Initial the code
     - ### Include the module
         In this case of application, we will have to create 2 Python Files named db.py and main.py. One is used to write a class named ```Database```, and define functions to fetch, insert, and count the item. Another one is used to write the main code and its GUI settings then run as main file.
@@ -90,7 +85,7 @@ Attendence
                 self.conn.commit()
         ```
     - ### Define ```count_item()``` function
-        In main.py we will call the function with a single coulumn. And what we nead to do is count the numbers of values which are __遲__, __公__, __曠__, __病__, or __事__. What we have to mention is the ```.fetchone()``` function will return a tupple back. So we will select the first data.
+        In main.py we will call the function with a single coulumn. And what we nead to do is count the numbers of values which are __遲__, __公__, __曠__, __病__, or __事__. What we have to mention is the ```.fetchone()``` function will return a tupple back. So we will select the data which index is one.
         ```python=28
             def count_item(self, column):
                 # count every item, append in the list, and return back the list
@@ -108,4 +103,3 @@ Attendence
                 temp.append(self.cur.fetchone()[0])
                 return temp
         ```
-- ## Set up Selenium and login
