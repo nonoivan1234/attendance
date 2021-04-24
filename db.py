@@ -28,15 +28,15 @@ class Database:
     def count_item(self, column):
         # count every item, append in the list, and return back the list
         
-        c = []
+        temp = []
         self.cur.execute('SELECT COUNT(%s) FROM tb WHERE %s = "遲";'%(column, column))
-        c.append(self.cur.fetchone()[0])
+        temp.append(self.cur.fetchone()[0])
         self.cur.execute('SELECT COUNT(%s) FROM tb WHERE %s = "公";'%(column, column))
-        c.append(self.cur.fetchone()[0])
+        temp.append(self.cur.fetchone()[0])
         self.cur.execute('SELECT COUNT(%s) FROM tb WHERE %s = "曠";'%(column, column))
-        c.append(self.cur.fetchone()[0])
+        temp.append(self.cur.fetchone()[0])
         self.cur.execute('SELECT COUNT(%s) FROM tb WHERE %s = "病";'%(column, column))
-        c.append(self.cur.fetchone()[0])
+        temp.append(self.cur.fetchone()[0])
         self.cur.execute('SELECT COUNT(%s) FROM tb WHERE %s = "事";'%(column, column))
-        c.append(self.cur.fetchone()[0])
-        return c
+        temp.append(self.cur.fetchone()[0])
+        return temp
