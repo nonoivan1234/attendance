@@ -147,7 +147,7 @@ sick.grid(column=3, row=2, columnspan=1)
 gon = tkinter.Label(root, text="公假："+str(count_gon)+"節",font = ("微軟正黑體",13))
 gon.grid(column=4, row=2, columnspan=1)
 
-sentence = tkinter.Label(root, text="總共 %d 節   "%sum(list(map(sum,ct)))+"所以我是要早點到嗎 ^____^",font = ("微軟正黑體",15))
+sentence = tkinter.Label(root, text="總共 %d 節   "%sum(list(map(sum,ct))),font = ("微軟正黑體",15))
 sentence.grid(column=0, row=3, columnspan=5, pady=10, padx=20)
 
 populate_list()
