@@ -108,4 +108,53 @@ Attendence
                 temp.append(self.cur.fetchone()[0])
                 return temp
         ```
+- ## Define functions in ```main.py```
+    With included module named ```Database```. Each of the two finctions we have to set up is ```click_collapse()``` and ```populate_list()```.
+    - ### Set up ```click_collapse()```
+        What the main porpose is to click the collapse item in the html. So we are required to input the target item in web code. By using ```ActionChains()``` to stimulate the mouse what users will do.
+        ```python=17
+        # click the collapse
+        def click_collapse(target):
+            ActionChains(chrome).move_to_element(target).perform()
+            ActionChains(chrome).click(target).perform()
+        ```
+    - ### Set up ```populate_list()```
+        So we have to fetch all the data in ```db.py```. First, delete all the children in the router_tree_view. Then, fetch all the data in database and insert it.
+        ```python=22
+        # populate the sqlite database to the router_tree_view    
+        def populate_list():
+            for i in router_tree_view.get_children():
+                router_tree_view.delete(i)
+            for row in db.fetch():
+                router_tree_view.insert('', 'end', values=row)
+        ```
 - ## Set up Selenium and login
+    - ### Set up the options of Selenium
+        By observing the website. We can simply get the login website of each scohhl is different. That is to say, we can just ```get``` the login page directly. 
+        So just write down the target url
+        ```python=15
+        url = "https://ldap.tp.edu.tw/oauth/authorize?client_id=13&redirect_uri=https%3A%2F%2Fsschool.tp.edu.tw%2Fedusso%2Fauth&response_type=code&state=ds%3D323301&scope=user%20profile%20idno%20school%20group_info"
+        ```
+        Then the option of the Selenium is
+        ```python=29
+        # option of the driver
+        options = Options()
+        options.add_argument("--disable-notifications")
+        options.add_experimental_option("excludeSwitches", ["enable-logging"])
+        chrome = webdriver.Chrome(executable_path='./chromedriver', chrome_options=options)
+        chrome.get(url)
+        ```
+        To keep our programe running smoothly. We will disable notifications and log. What we have to mention is the driver's path needs to be the related path.
+    - ### Submit the login information
+         By observing the web page, we can easily know that the textbox of the username's and the password's id is ```username``` and ```password``` . So just send the key to them, then click the submit button.
+        ```python=36
+        # input the username and password then click the submit the button
+        username = chrome.find_element_by_id('username')
+        password = chrome.find_element_by_id('password')
+        submit_btn = chrome.find_element_by_id('btnLogin')
+        username.send_keys('**USERNAME**')
+        password.send_keys('**PASSWORD**')
+        submit_btn.click()
+        ```
+- ## Other code description
+    ### Coming soon...
