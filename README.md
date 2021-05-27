@@ -1,5 +1,3 @@
-Attendence
-===
 # Introduction
 - ## Background
     The application is based on ```Python 3.9.4``` . Main purpose is to scrape the absent data down from [臺北市高中校務行政系統](https://sschool.tp.edu.tw/Login.action).
