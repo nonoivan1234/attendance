@@ -1,3 +1,6 @@
+''''
+This file's main purpose is to download the absent data as a csv file. 
+''''
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.action_chains import ActionChains
@@ -30,8 +33,8 @@ chrome.get(url)
 username = chrome.find_element_by_id('username')
 password = chrome.find_element_by_id('password')
 submit_btn = chrome.find_element_by_id('btnLogin')
-username.send_keys('sssh10930148')
-password.send_keys('A131892440')
+username.send_keys('**USERNAME**')
+password.send_keys('**PASSWORD**')
 submit_btn.click()
 time.sleep(1)
 
