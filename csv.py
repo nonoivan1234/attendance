@@ -9,7 +9,7 @@ import pandas as pd
 import time
 import os, sys
 
-url = "https://ldap.tp.edu.tw/oauth/authorize?client_id=13&redirect_uri=https%3A%2F%2Fsschool.tp.edu.tw%2Fedusso%2Fauth&response_type=code&state=ds%3D323301&scope=user%20profile%20idno%20school%20group_info"
+url = "https://sschool.tp.edu.tw/edusso/link?school=323301"
 
 
 def click_collapse(target):

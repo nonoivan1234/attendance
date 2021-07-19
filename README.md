@@ -1,6 +1,6 @@
 # Introduction
 - ## Background
-    The application is based on ```Python 3.9.4``` . Main purpose is to scrape the absent data down from [臺北市高中校務行政系統](https://sschool.tp.edu.tw/Login.action).
+    The application is based on ```Python 3.9.4``` . Chrome is based on ```vr.91```. Main purpose is to scrape the absent data down from [臺北市高中校務行政系統](https://sschool.tp.edu.tw/Login.action).
 - ## Motivation
     In our school, who was absent before nead to check out the attendence in three days after you took a day off. However, I usually forget to do that on time, although my mom always asks me to do it on time. So I decided to write a programe to check my attendence automatically.
 - ## Method
