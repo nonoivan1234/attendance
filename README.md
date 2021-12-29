@@ -1,8 +1,8 @@
 # Introduction
 - ## Background
     The application is based on ```Python 3.9.4``` . Chrome is based on ```vr.93```. Main purpose is to scrape the absent data down from [臺北市高中校務行政系統](https://sschool.tp.edu.tw/Login.action).
-- ## Motivation
-    In our school, who was absent before nead to check out the attendence in three days after you took a day off. However, I usually forget to do that on time, although my mom always asks me to do it on time. So I decided to write a programe to check my attendence automatically.
+<!--- ## Motivation
+    In our school, who was absent before nead to check out the attendence in three days after you took a day off. However, I usually forget to do that on time, although my mom always asks me to do it on time. So I decided to write a programe to check my attendence automatically.-->
 - ## Method
     First, we are asked to login the site. Second, we have to go to the asking page to find my absent data then scrape it down. Third, store the data as a SQLite file which we just scraped. Last, create a GUI frame to show the database with a ScrollBar beside, count the amount of absent classses in each sections a day, and count the different type of absent.
 # Body
@@ -154,5 +154,3 @@
         password.send_keys('**PASSWORD**')
         submit_btn.click()
         ```
-- ## Other code description
-    ### Coming soon...
