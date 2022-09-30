@@ -2,7 +2,6 @@ import tkinter
 from tkinter import *
 from tkinter.ttk import Treeview
 from selenium import webdriver
-from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.action_chains import ActionChains
 from bs4 import BeautifulSoup
 import time
@@ -16,8 +15,8 @@ url = "https://sschool.tp.edu.tw/edusso/link?school=323301"
 
 # click the collapse
 def click_collapse(target):
-    ActionChains(chrome).move_to_element(target).perform()
-    ActionChains(chrome).click(target).perform()
+    ActionChains(driver).move_to_element(target).perform()
+    ActionChains(driver).click(target).perform()
 
 # populate the sqlite database to the router_tree_view    
 def populate_list():
@@ -26,38 +25,35 @@ def populate_list():
     for row in db.fetch():
         router_tree_view.insert('', 'end', values=row)
 
-# option of the driver
-options = Options()
-options.add_argument("--disable-notifications")
-options.add_experimental_option("excludeSwitches", ["enable-logging"])
-chrome = webdriver.Chrome(executable_path='./chromedriver', chrome_options=options)
-chrome.get(url)
+
+driver = webdriver.Edge('msedgedriver.exe')
+driver.get(url)
 
 # input the username and password then click the submit the button
-username = chrome.find_element_by_id('username')
-password = chrome.find_element_by_id('password')
-submit_btn = chrome.find_element_by_id('btnLogin')
+username = driver.find_element_by_xpath('//*[@id="standard-basic"]')
+password = driver.find_element_by_xpath('//*[@id="standard-password-input"]')
+submit_btn = driver.find_element_by_class_name('jss524')
 username.send_keys('USERNAME')
 password.send_keys('PASSWORD')
 submit_btn.click()
-time.sleep(1)
+time.sleep(2)
 
 # close the notifying page after submit the passwd
-close_btn = chrome.find_element_by_xpath('//*[@id="carouselModalCenter"]/div/div/div[1]/button')
+close_btn = driver.find_element_by_xpath('//*[@id="carouselModalCenter"]/div/div/div[1]/button')
 close_btn.click()
 
 
 # click the left side collapse to go into the purpose page
-btn = chrome.find_element_by_xpath('//*[@id="LeftMenu"]/div/ul/li[2]/a')
+btn = driver.find_element_by_xpath('//*[@id="LeftMenu"]/div/ul/li[2]/a')
 click_collapse(btn)
 
-absent_btn = chrome.find_element_by_xpath('//*[@id="collapse200"]/div/li[3]/a')
+absent_btn = driver.find_element_by_xpath('//*[@id="collapse200"]/div/li[3]/a')
 click_collapse(absent_btn)
 
 # wait for the page
 time.sleep(2)
 
-soup = BeautifulSoup(chrome.page_source, 'html.parser')
+soup = BeautifulSoup(driver.page_source, 'html.parser')
 
 # find header in html
 list_header = []
@@ -84,7 +80,7 @@ for element in HTML_data:
     if sub_data[6] != '':   # insert the non-null header to database
         db.insert(sub_data[6], sub_data[7], sub_data[8], sub_data[9], sub_data[10], sub_data[11], sub_data[12], sub_data[13], sub_data[14], sub_data[15], sub_data[16])
 
-chrome.close()
+driver.close()
 
  # setting the database_viewer
 frame_router = Frame(root)
@@ -152,7 +148,7 @@ sentence.grid(column=0, row=3, columnspan=5, pady=10, padx=20)
 
 populate_list()
 
-root.title('我愛風紀股長！')
+root.title('出缺勤查詢')
 
 # run the main GUI
 root.mainloop()
