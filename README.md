@@ -1,3 +1,14 @@
+# Demonstration
+Demonstrate the final visualized result. Some statistics have been pixelated due to the personal information.
+## Tkinter GUI
+
+![image](https://user-images.githubusercontent.com/71141033/218176879-ee7f11e7-aff3-44e2-822e-d41e11879b83.png)
+
+## CSV file
+
+![image](https://user-images.githubusercontent.com/71141033/218178045-072379b3-49f7-4c5a-8f70-2516ab9b8652.png)
+
+
 # Introduction
 - ## Background
     The application is based on ```Python 3.9.4``` . Chrome is based on ```vr.93```. Main purpose is to scrape the absent data down from [臺北市高中校務行政系統](https://sschool.tp.edu.tw/Login.action).
@@ -152,7 +163,7 @@
         username = chrome.find_element_by_id('username')
         password = chrome.find_element_by_id('password')
         submit_btn = chrome.find_element_by_id('btnLogin')
-        username.send_keys('**USERNAME**')
-        password.send_keys('**PASSWORD**')
+        username.send_keys('USERNAME')
+        password.send_keys('PASSWORD')
         submit_btn.click()
         ```
