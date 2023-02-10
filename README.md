@@ -23,7 +23,7 @@ Demonstrate the final visualized result. Some statistics have been pixelated due
     - ### Tkinter
         To build a GUI application with Python quickly.
     - ### Selenium
-        To stimulate mouse movements to click the non-button element in website.
+        To simulate mouse movements to click the non-button element in website.
         Notice: Selenium is based on its driver, so we have to download the driver on the [website](https://pypi.org/project/selenium/).
     - ### BeautifulSoup
         To scrape the website's html source and find the element of the website by its id, class, xpath, etc.
@@ -122,7 +122,7 @@ Demonstrate the final visualized result. Some statistics have been pixelated due
 - ## Define functions in ```main.py```
     With included module named ```Database```. Each of the two finctions we have to set up is ```click_collapse()``` and ```populate_list()```.
     - ### Set up ```click_collapse()```
-        What the main porpose is to click the collapse item in the html. So we are required to input the target item in web code. By using ```ActionChains()``` to stimulate the mouse what users will do.
+        What the main porpose is to click the collapse item in the html. So we are required to input the target item in web code. By using ```ActionChains()``` to simulate the mouse what users will do.
         ```python=17
         # click the collapse
         def click_collapse(target):
