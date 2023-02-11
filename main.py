@@ -33,8 +33,8 @@ driver.get(url)
 username = driver.find_element_by_xpath('//*[@id="standard-basic"]')
 password = driver.find_element_by_xpath('//*[@id="standard-password-input"]')
 submit_btn = driver.find_element_by_class_name('jss524')
-username.send_keys('USERNAME')
-password.send_keys('PASSWORD')
+username.send_keys('username')
+password.send_keys('password')
 submit_btn.click()
 time.sleep(2)
 
@@ -82,7 +82,7 @@ for element in HTML_data:
 
 driver.close()
 
- # setting the database_viewer
+# setting the database_viewer
 frame_router = Frame(root)
 frame_router.grid(row=0, column=0, columnspan=5, rowspan=1, pady=10, padx=20)
 
